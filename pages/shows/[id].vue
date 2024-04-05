@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const route = useRoute()
+const { data: show, suspense } = useShowDetailQuery()
+await suspense()
 </script>
 
 <template>
   <div>
-    <h1>Shows Detail Page</h1>
-    <p>Id: {{ route.params.id }}</p>
+    <h1>{{ show?.name }}</h1>
   </div>
 </template>

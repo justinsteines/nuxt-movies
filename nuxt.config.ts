@@ -5,4 +5,7 @@ export default defineNuxtConfig({
       standalone: false,
     },
   },
+  runtimeConfig: {
+    tmdbApiKey: '',
+  },
 })

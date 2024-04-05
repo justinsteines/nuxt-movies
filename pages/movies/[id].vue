@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const route = useRoute()
+const { data: movie, suspense } = useMovieDetailQuery()
+await suspense()
 </script>
 
 <template>
   <div>
-    <h1>Movies Detail Page</h1>
-    <p>Id: {{ route.params.id }}</p>
+    <h1>{{ movie?.title }}</h1>
   </div>
 </template>
