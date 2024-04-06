@@ -7,10 +7,11 @@ export default function () {
 
   return useInfiniteQuery<TmdbPaginatedResponse<ShowListItem>>({
     queryKey: ['shows', route.params.id, 'recommendations'],
-    queryFn: ({ queryKey, pageParam, signal }) => $tmdb(`tv/${queryKey[1]}/recommendations`, {
-      query: { page: pageParam },
-      signal,
-    }),
+    queryFn: ({ queryKey, pageParam, signal }) =>
+      $tmdb(`tv/${queryKey[1]}/recommendations`, {
+        query: { page: pageParam },
+        signal,
+      }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       return lastPage.page + 1 < lastPage.total_pages

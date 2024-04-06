@@ -9,16 +9,22 @@ await suspenseShows()
   <div>
     <h2>Trending Movies</h2>
     <ul>
-      <li v-for="movie of resMovies?.pages.flatMap(p => p.results)" :key="movie.id">
+      <li
+        v-for="movie of resMovies?.pages.flatMap((p) => p.results)"
+        :key="movie.id"
+      >
         <NuxtLink :to="`/movies/${movie.id}`">
           {{ movie.title }}
         </NuxtLink>
       </li>
     </ul>
-    <br>
+    <br />
     <h2>Trending Shows</h2>
     <ul>
-      <li v-for="show of resShows?.pages.flatMap(p => p.results)" :key="show.id">
+      <li
+        v-for="show of resShows?.pages.flatMap((p) => p.results)"
+        :key="show.id"
+      >
         <NuxtLink :to="`/shows/${show.id}`">
           {{ show.name }}
         </NuxtLink>

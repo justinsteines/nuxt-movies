@@ -6,10 +6,11 @@ export default function () {
 
   return useInfiniteQuery<TmdbPaginatedResponse<ShowListItem>>({
     queryKey: ['shows', 'airingToday'],
-    queryFn: ({ pageParam, signal }) => $tmdb('/tv/airing_today', {
-      query: { page: pageParam },
-      signal,
-    }),
+    queryFn: ({ pageParam, signal }) =>
+      $tmdb('/tv/airing_today', {
+        query: { page: pageParam },
+        signal,
+      }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       return lastPage.page + 1 < lastPage.total_pages

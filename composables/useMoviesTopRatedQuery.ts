@@ -6,10 +6,11 @@ export default function () {
 
   return useInfiniteQuery<TmdbPaginatedResponse<MovieListItem>>({
     queryKey: ['movies', 'topRated'],
-    queryFn: ({ pageParam, signal }) => $tmdb('/movie/top_rated', {
-      query: { page: pageParam },
-      signal,
-    }),
+    queryFn: ({ pageParam, signal }) =>
+      $tmdb('/movie/top_rated', {
+        query: { page: pageParam },
+        signal,
+      }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       return lastPage.page + 1 < lastPage.total_pages
