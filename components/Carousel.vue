@@ -88,7 +88,6 @@ function onScroll(evt: Event) {
           :items-per-page="itemsPerPage"
         >
           <CarouselItemImage
-            v-if="item.imagePath"
             :image-path="item.imagePath"
             :alt="item.title || 'Poster image'"
           />

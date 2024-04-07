@@ -1,12 +1,13 @@
 <script setup lang="ts">
 defineProps<{
-  imagePath: string
+  imagePath?: string
   alt: string
 }>()
 </script>
 
 <template>
   <AppLazyImage
+    v-if="imagePath"
     :key="imagePath"
     :src="`https://image.tmdb.org/t/p/w185${imagePath}`"
     :src-set="
@@ -34,4 +35,10 @@ defineProps<{
     container-class="aspect-[6/9] rounded-lg"
     class="w-full rounded-[inherit] object-cover"
   />
+  <div
+    v-else
+    class="flex aspect-[6/9] w-full items-center justify-center rounded-lg bg-slate-900"
+  >
+    No Image
+  </div>
 </template>

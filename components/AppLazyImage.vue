@@ -41,7 +41,7 @@ onUnmounted(() => {
     <img
       ref="imageRef"
       v-bind="$attrs"
-      class="transition-all duration-1000"
+      class="h-full transition-all duration-1000"
       :class="{
         'scale-100 opacity-100': loaded,
         'scale-95 opacity-0': !loaded,
