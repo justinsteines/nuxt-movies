@@ -51,14 +51,15 @@ const carousels = computed(() => [
           title: show.name,
           subtitle: {
             rating: show.vote_average,
+            voteCount: show.vote_count,
           },
           link: `/shows/${show.id}`,
           imagePath: show.poster_path,
         }))
       "
     >
-      <template #subtitle="{ rating }">
-        <StarRating v-if="rating" :rating="+rating" />
+      <template #subtitle="{ rating, voteCount }">
+        <StarRating :rating="+rating!" :vote-count="+voteCount!" />
       </template>
     </Carousel>
   </div>

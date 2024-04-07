@@ -17,14 +17,15 @@ await suspenseShows()
             title: movie.title,
             subtitle: {
               rating: movie.vote_average,
+              voteCount: movie.vote_count,
             },
             link: `/movies/${movie.id}`,
             imagePath: movie.poster_path,
           }))
       "
     >
-      <template #subtitle="{ rating }">
-        <StarRating v-if="rating" :rating="+rating" />
+      <template #subtitle="{ rating, voteCount }">
+        <StarRating :rating="+rating!" :vote-count="+voteCount!" />
       </template>
     </Carousel>
     <Carousel
@@ -37,14 +38,15 @@ await suspenseShows()
             title: show.name,
             subtitle: {
               rating: show.vote_average,
+              voteCount: show.vote_count,
             },
             link: `/shows/${show.id}`,
             imagePath: show.poster_path,
           }))
       "
     >
-      <template #subtitle="{ rating }">
-        <StarRating v-if="rating" :rating="+rating" />
+      <template #subtitle="{ rating, voteCount }">
+        <StarRating :rating="+rating!" :vote-count="+voteCount!" />
       </template>
     </Carousel>
   </div>
