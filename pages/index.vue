@@ -7,28 +7,45 @@ await suspenseShows()
 
 <template>
   <div>
-    <h2>Trending Movies</h2>
-    <ul>
-      <li
-        v-for="movie of resMovies?.pages.flatMap((p) => p.results)"
-        :key="movie.id"
-      >
-        <NuxtLink :to="`/movies/${movie.id}`">
-          {{ movie.title }}
-        </NuxtLink>
-      </li>
-    </ul>
-    <br />
-    <h2>Trending Shows</h2>
-    <ul>
-      <li
-        v-for="show of resShows?.pages.flatMap((p) => p.results)"
-        :key="show.id"
-      >
-        <NuxtLink :to="`/shows/${show.id}`">
-          {{ show.name }}
-        </NuxtLink>
-      </li>
-    </ul>
+    <Carousel
+      title="Trending Movies"
+      :items="
+        resMovies?.pages
+          .flatMap((p) => p.results)
+          .map((movie) => ({
+            id: movie.id,
+            title: movie.title,
+            subtitle: {
+              rating: movie.vote_average,
+            },
+            link: `/movies/${movie.id}`,
+            imagePath: movie.poster_path,
+          }))
+      "
+    >
+      <template #subtitle="{ rating }">
+        <StarRating v-if="rating" :rating="+rating" />
+      </template>
+    </Carousel>
+    <Carousel
+      title="Trending Shows"
+      :items="
+        resShows?.pages
+          .flatMap((p) => p.results)
+          .map((show) => ({
+            id: show.id,
+            title: show.name,
+            subtitle: {
+              rating: show.vote_average,
+            },
+            link: `/shows/${show.id}`,
+            imagePath: show.poster_path,
+          }))
+      "
+    >
+      <template #subtitle="{ rating }">
+        <StarRating v-if="rating" :rating="+rating" />
+      </template>
+    </Carousel>
   </div>
 </template>

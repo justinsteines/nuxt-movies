@@ -10,6 +10,10 @@ export default withNuxt(
     formatters: true,
     ...{
       ...tailwindcss.configs.recommended,
+      rules: {
+        ...tailwindcss.configs.recommended.rules,
+        'tailwindcss/no-custom-classname': 'off',
+      },
       plugins: {
         tailwindcss,
       },

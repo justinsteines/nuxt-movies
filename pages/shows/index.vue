@@ -8,73 +8,58 @@ const { data: resAiringWeek, suspense: suspenseAiringWeek } =
 const { data: resPopular, suspense: suspensePopular } = useShowsPopularQuery()
 const { data: resTopRated, suspense: suspenseTopRated } =
   useShowsTopRatedQuery()
+
 await suspenseTrending()
 await suspenseAiringToday()
 await suspenseAiringWeek()
 await suspensePopular()
 await suspenseTopRated()
+
+const carousels = computed(() => [
+  {
+    title: 'Trending Shows',
+    items: resTrending.value?.pages.flatMap((p) => p.results),
+  },
+  {
+    title: 'Shows Airing Today',
+    items: resAiringToday.value?.pages.flatMap((p) => p.results),
+  },
+  {
+    title: 'Shows Airing In The Next Week',
+    items: resAiringWeek.value?.pages.flatMap((p) => p.results),
+  },
+  {
+    title: 'Popular Shows',
+    items: resPopular.value?.pages.flatMap((p) => p.results),
+  },
+  {
+    title: 'Top Rated Shows',
+    items: resTopRated.value?.pages.flatMap((p) => p.results),
+  },
+])
 </script>
 
 <template>
   <div>
-    <h2>Trending Shows</h2>
-    <ul>
-      <li
-        v-for="show of resTrending?.pages.flatMap((p) => p.results)"
-        :key="show.id"
-      >
-        <NuxtLink :to="`shows/${show.id}`">
-          {{ show.name }}
-        </NuxtLink>
-      </li>
-    </ul>
-    <br />
-    <h2>Shows Airing Today</h2>
-    <ul>
-      <li
-        v-for="show of resAiringToday?.pages.flatMap((p) => p.results)"
-        :key="show.id"
-      >
-        <NuxtLink :to="`shows/${show.id}`">
-          {{ show.name }}
-        </NuxtLink>
-      </li>
-    </ul>
-    <br />
-    <h2>Shows Airing In The Next Week</h2>
-    <ul>
-      <li
-        v-for="show of resAiringWeek?.pages.flatMap((p) => p.results)"
-        :key="show.id"
-      >
-        <NuxtLink :to="`shows/${show.id}`">
-          {{ show.name }}
-        </NuxtLink>
-      </li>
-    </ul>
-    <br />
-    <h2>Popular Shows</h2>
-    <ul>
-      <li
-        v-for="show of resPopular?.pages.flatMap((p) => p.results)"
-        :key="show.id"
-      >
-        <NuxtLink :to="`shows/${show.id}`">
-          {{ show.name }}
-        </NuxtLink>
-      </li>
-    </ul>
-    <br />
-    <h2>Top Rated Shows</h2>
-    <ul>
-      <li
-        v-for="show of resTopRated?.pages.flatMap((p) => p.results)"
-        :key="show.id"
-      >
-        <NuxtLink :to="`shows/${show.id}`">
-          {{ show.name }}
-        </NuxtLink>
-      </li>
-    </ul>
+    <Carousel
+      v-for="carousel of carousels"
+      :key="carousel.title"
+      :title="carousel.title"
+      :items="
+        carousel.items?.map((show) => ({
+          id: show.id,
+          title: show.name,
+          subtitle: {
+            rating: show.vote_average,
+          },
+          link: `/shows/${show.id}`,
+          imagePath: show.poster_path,
+        }))
+      "
+    >
+      <template #subtitle="{ rating }">
+        <StarRating v-if="rating" :rating="+rating" />
+      </template>
+    </Carousel>
   </div>
 </template>

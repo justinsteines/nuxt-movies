@@ -8,73 +8,58 @@ const { data: resUpcoming, suspense: suspenseUpcoming } =
   useMoviesUpcomingQuery()
 const { data: resTopRated, suspense: suspenseTopRated } =
   useMoviesTopRatedQuery()
+
 await suspenseTrending()
 await suspenseNowPlaying()
 await suspensePopular()
 await suspenseUpcoming()
 await suspenseTopRated()
+
+const carousels = computed(() => [
+  {
+    title: 'Trending Movies',
+    items: resTrending.value?.pages.flatMap((p) => p.results),
+  },
+  {
+    title: 'Now Playing Movies',
+    items: resNowPlaying.value?.pages.flatMap((p) => p.results),
+  },
+  {
+    title: 'Upcoming Movies',
+    items: resUpcoming.value?.pages.flatMap((p) => p.results),
+  },
+  {
+    title: 'Popular Movies',
+    items: resPopular.value?.pages.flatMap((p) => p.results),
+  },
+  {
+    title: 'Top Rated Movies',
+    items: resTopRated.value?.pages.flatMap((p) => p.results),
+  },
+])
 </script>
 
 <template>
   <div>
-    <h2>Trending Movies</h2>
-    <ul>
-      <li
-        v-for="movie of resTrending?.pages.flatMap((p) => p.results)"
-        :key="movie.id"
-      >
-        <NuxtLink :to="`/movies/${movie.id}`">
-          {{ movie.title }}
-        </NuxtLink>
-      </li>
-    </ul>
-    <br />
-    <h2>Movies Now Playing</h2>
-    <ul>
-      <li
-        v-for="movie of resNowPlaying?.pages.flatMap((p) => p.results)"
-        :key="movie.id"
-      >
-        <NuxtLink :to="`/movies/${movie.id}`">
-          {{ movie.title }}
-        </NuxtLink>
-      </li>
-    </ul>
-    <br />
-    <h2>Upcoming Movies</h2>
-    <ul>
-      <li
-        v-for="movie of resUpcoming?.pages.flatMap((p) => p.results)"
-        :key="movie.id"
-      >
-        <NuxtLink :to="`/movies/${movie.id}`">
-          {{ movie.title }}
-        </NuxtLink>
-      </li>
-    </ul>
-    <br />
-    <h2>Popular Movies</h2>
-    <ul>
-      <li
-        v-for="movie of resPopular?.pages.flatMap((p) => p.results)"
-        :key="movie.id"
-      >
-        <NuxtLink :to="`/movies/${movie.id}`">
-          {{ movie.title }}
-        </NuxtLink>
-      </li>
-    </ul>
-    <br />
-    <h2>Top Rated Movies</h2>
-    <ul>
-      <li
-        v-for="movie of resTopRated?.pages.flatMap((p) => p.results)"
-        :key="movie.id"
-      >
-        <NuxtLink :to="`/movies/${movie.id}`">
-          {{ movie.title }}
-        </NuxtLink>
-      </li>
-    </ul>
+    <Carousel
+      v-for="carousel of carousels"
+      :key="carousel.title"
+      :title="carousel.title"
+      :items="
+        carousel.items?.map((movie) => ({
+          id: movie.id,
+          title: movie.title,
+          subtitle: {
+            rating: movie.vote_average,
+          },
+          link: `/movies/${movie.id}`,
+          imagePath: movie.poster_path,
+        }))
+      "
+    >
+      <template #subtitle="{ rating }">
+        <StarRating v-if="rating" :rating="+rating" />
+      </template>
+    </Carousel>
   </div>
 </template>
