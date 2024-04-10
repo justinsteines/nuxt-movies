@@ -2,7 +2,7 @@
 import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 
 useHead({
-  htmlAttrs: {
+  bodyAttrs: {
     class: 'bg-slate-950 text-slate-50',
   },
 })
