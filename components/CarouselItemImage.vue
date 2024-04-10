@@ -10,7 +10,7 @@ defineProps<{
     v-if="imagePath"
     :key="imagePath"
     :src="`https://image.tmdb.org/t/p/w185${imagePath}`"
-    :src-set="
+    :srcset="
       [
         `https://image.tmdb.org/t/p/w92${imagePath} 92w`,
         `https://image.tmdb.org/t/p/w154${imagePath} 154w`,

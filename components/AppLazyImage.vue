@@ -3,9 +3,9 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const { src, srcSet } = defineProps<{
+const { src, srcset } = defineProps<{
   src: string
-  srcSet: string
+  srcset: string
   containerClass?: string
 }>()
 
@@ -19,7 +19,7 @@ onMounted(() => {
     const [entry] = entries
     if (entry.isIntersecting) {
       imageRef.value!.src = src
-      imageRef.value!.srcset = srcSet
+      imageRef.value!.srcset = srcset
       observer!.unobserve(imageRef.value!)
     }
   })
