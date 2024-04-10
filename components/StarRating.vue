@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { rating } = defineProps<{
   rating: number
-  voteCount: number
+  ratingCount: number
 }>()
 
 const stars = computed(() => (rating / 2).toFixed(1))
@@ -10,7 +10,7 @@ const percentage = computed(() => `${Math.round((+stars.value / 5) * 100)}%`)
 
 <template>
   <div class="relative h-6">
-    <template v-if="voteCount > 0">
+    <template v-if="ratingCount > 0">
       <div
         class="stars before:absolute before:bg-clip-text before:text-transparent before:content-['★★★★★'] after:absolute after:text-sky-400 after:content-['☆☆☆☆☆']"
       />
