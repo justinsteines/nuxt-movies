@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  modules: ['@nuxt/devtools', '@nuxt/eslint', '@nuxtjs/tailwindcss', 'nuxt-lodash'],
+  modules: ['@nuxt/devtools', '@nuxt/eslint', '@nuxtjs/tailwindcss', 'nuxt-icon', 'nuxt-lodash'],
   eslint: {
     config: {
       standalone: false,
