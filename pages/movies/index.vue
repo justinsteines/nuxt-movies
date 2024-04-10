@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { MovieListItem } from '~/types/tmdb'
+
 const { data: resTrending, suspense: suspenseTrending } =
   useMoviesTrendingQuery()
 const { data: resNowPlaying, suspense: suspenseNowPlaying } =
@@ -37,10 +39,26 @@ const carousels = computed(() => [
     items: resTopRated.value?.pages.flatMap((p) => p.results),
   },
 ])
+
+// Use "useAsyncData" so that we get hydration and a new feature on every page visit.
+const { data: feature } = useAsyncData<MovieListItem | undefined>(() => {
+  return new Promise((resolve) =>
+    resolve(carousels?.value[0]?.items?.[Math.floor(Math.random() * 10)])
+  )
+})
 </script>
 
 <template>
   <div>
+    <Hero
+      v-if="feature"
+      :link="`/movies/${feature.id}`"
+      :title="feature.title"
+      :overview="feature.overview"
+      :rating="feature.vote_average"
+      :rating-count="feature.vote_count"
+      :backdrop-path="feature.backdrop_path"
+    />
     <Carousel
       v-for="carousel of carousels"
       :key="carousel.title"
