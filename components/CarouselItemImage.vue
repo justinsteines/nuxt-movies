@@ -39,6 +39,6 @@ defineProps<{
     v-else
     class="flex aspect-[6/9] w-full items-center justify-center rounded-lg bg-slate-900"
   >
-    No Image
+    <Icon name="carbon:no-image" class="size-8" />
   </div>
 </template>

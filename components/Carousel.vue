@@ -45,7 +45,7 @@ function onClick(direction: 'left' | 'right') {
   }
 }
 
-function onScroll(evt: Event) {
+const onScroll = _throttle((evt: Event) => {
   if ((evt.target as HTMLElement).scrollLeft <= 0) {
     showLeftButton.value = false
     showRightButton.value = true
@@ -60,7 +60,7 @@ function onScroll(evt: Event) {
     showLeftButton.value = true
     showRightButton.value = true
   }
-}
+}, 500)
 </script>
 
 <template>
