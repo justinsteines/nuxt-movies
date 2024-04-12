@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-  link: string
+  link?: string
   title: string
   overview: string
   rating: number

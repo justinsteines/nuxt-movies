@@ -12,6 +12,7 @@ export default withNuxt(
       ...tailwindcss.configs.recommended,
       rules: {
         ...tailwindcss.configs.recommended.rules,
+        'tailwindcss/classnames-order': 'off',
         'tailwindcss/no-custom-classname': 'off',
       },
       plugins: {

@@ -16,7 +16,7 @@ withDefaults(
       title?: string
       subtitle?: string | { [key: string]: number | string | undefined }
       link: string
-      imagePath?: string
+      imagePath?: string | null
     }[]
     itemsPerPage?: ItemsPerPage
   }>(),
