@@ -1,10 +1,8 @@
 <template>
-  <div
-    class="grid grid-rows-[1fr_auto] h-screen-safe 2xl:container lg:grid-cols-[auto_1fr] lg:grid-rows-1 2xl:mx-auto"
-  >
-    <main class="overflow-auto">
+  <div>
+    <TheNavigation />
+    <main class="pb-20 lg:pb-1 lg:pl-24">
       <slot />
     </main>
-    <TheNavigation />
   </div>
 </template>
