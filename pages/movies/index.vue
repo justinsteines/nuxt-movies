@@ -52,6 +52,7 @@ const { data: feature } = useAsyncData<MovieListItem | undefined>(() => {
   <div>
     <Hero
       v-if="feature"
+      :key="feature.backdrop_path"
       :link="`/movies/${feature.id}`"
       :title="feature.title"
       :overview="feature.overview"

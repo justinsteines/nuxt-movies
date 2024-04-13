@@ -31,7 +31,7 @@ function onTabChange(index: number) {
 <template>
   <div v-if="show">
     <Hero
-      :key="`show/${show.id}`"
+      :key="show.backdrop_path"
       :title="show.name"
       :overview="show.overview"
       :rating="show.vote_average"
