@@ -4,10 +4,10 @@ import type { ShowListItem, TmdbPaginatedResponse } from '~/types/tmdb'
 export default function () {
   const { $tmdb } = useNuxtApp()
 
-  return useInfiniteQuery<TmdbPaginatedResponse<ShowListItem>>({
-    queryKey: ['shows', 'popular'],
+  const infiniteQuery = useInfiniteQuery<TmdbPaginatedResponse<ShowListItem>>({
+    queryKey: ['shows', 'airingWeek'],
     queryFn: ({ pageParam, signal }) =>
-      $tmdb('/tv/popular', {
+      $tmdb('/tv/on_the_air', {
         query: { page: pageParam },
         signal,
       }),
@@ -18,4 +18,10 @@ export default function () {
         : undefined
     },
   })
+
+  onServerPrefetch(async () => {
+    await infiniteQuery.suspense()
+  })
+
+  return infiniteQuery
 }

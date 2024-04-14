@@ -3,11 +3,12 @@ import type { MovieListItem, TmdbPaginatedResponse } from '~/types/tmdb'
 
 export default function () {
   const { $tmdb } = useNuxtApp()
+  const route = useRoute()
 
-  return useInfiniteQuery<TmdbPaginatedResponse<MovieListItem>>({
-    queryKey: ['movies', 'nowPlaying'],
-    queryFn: ({ pageParam, signal }) =>
-      $tmdb('/movie/now_playing', {
+  const infiniteQuery = useInfiniteQuery<TmdbPaginatedResponse<MovieListItem>>({
+    queryKey: ['movies', route.params.id, 'recommendations'],
+    queryFn: ({ queryKey, pageParam, signal }) =>
+      $tmdb(`movie/${queryKey[1]}/recommendations`, {
         query: { page: pageParam },
         signal,
       }),
@@ -18,4 +19,10 @@ export default function () {
         : undefined
     },
   })
+
+  onServerPrefetch(async () => {
+    await infiniteQuery.suspense()
+  })
+
+  return infiniteQuery
 }

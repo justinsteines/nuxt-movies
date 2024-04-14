@@ -1,10 +1,6 @@
 <script setup lang="ts">
-const { data: movie, suspense } = useMovieDetailQuery()
-const { data: recommendations, suspense: recommendationsSuspense } =
-  useMoviesRecommendationsQuery()
-
-await suspense()
-await recommendationsSuspense()
+const { data: movie, isFetching } = useMovieDetailQuery()
+const { data: recommendations } = useMoviesRecommendationsInfiniteQuery()
 
 const route = useRoute()
 const router = useRouter()
@@ -29,7 +25,8 @@ function onTabChange(index: number) {
 </script>
 
 <template>
-  <div v-if="movie">
+  <PageLoader v-if="isFetching" />
+  <div v-else-if="movie">
     <Hero
       :key="movie.backdrop_path"
       :title="movie.title"

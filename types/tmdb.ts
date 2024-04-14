@@ -7,7 +7,7 @@ export interface TmdbPaginatedResponse<T> {
 
 export interface MovieListItem {
   adult: boolean
-  backdrop_path: string
+  backdrop_path?: string
   genre_ids: number[]
   id: number
   original_language: string
@@ -24,7 +24,7 @@ export interface MovieListItem {
 
 export interface MovieDetail {
   adult: boolean
-  backdrop_path: string
+  backdrop_path?: string
   belongs_to_collection: null
   budget: number
   genres: Genre[]
@@ -98,7 +98,7 @@ export interface SpokenLanguage {
 
 export interface ShowListItem {
   adult: boolean
-  backdrop_path: string
+  backdrop_path?: string
   genre_ids: number[]
   id: number
   origin_country: string[]
@@ -115,7 +115,7 @@ export interface ShowListItem {
 
 export interface ShowDetail {
   adult: boolean
-  backdrop_path: string
+  backdrop_path?: string
   created_by: CreatedBy[]
   episode_run_time: any[]
   first_air_date: string

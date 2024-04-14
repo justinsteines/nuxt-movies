@@ -5,7 +5,7 @@ export default function () {
   const { $tmdb } = useNuxtApp()
   const route = useRoute()
 
-  return useInfiniteQuery<TmdbPaginatedResponse<ShowListItem>>({
+  const infiniteQuery = useInfiniteQuery<TmdbPaginatedResponse<ShowListItem>>({
     queryKey: ['shows', route.params.id, 'recommendations'],
     queryFn: ({ queryKey, pageParam, signal }) =>
       $tmdb(`tv/${queryKey[1]}/recommendations`, {
@@ -19,4 +19,10 @@ export default function () {
         : undefined
     },
   })
+
+  onServerPrefetch(async () => {
+    await infiniteQuery.suspense()
+  })
+
+  return infiniteQuery
 }

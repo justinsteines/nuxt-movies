@@ -5,7 +5,7 @@ defineProps<{
   overview: string
   rating: number
   ratingCount: number
-  backdropPath: string
+  backdropPath?: string
 }>()
 </script>
 
@@ -18,6 +18,7 @@ defineProps<{
         class="aspect-video w-full bg-slate-950 after:absolute after:inset-0 after:z-10 after:bg-gradient-to-t after:from-slate-950 after:via-transparent after:via-15% lg:before:absolute lg:before:inset-0 lg:before:z-10 lg:before:bg-gradient-to-r lg:before:from-slate-950 lg:before:via-transparent lg:before:via-50%"
       >
         <img
+          v-if="backdropPath"
           :src="`https://image.tmdb.org/t/p/w780${backdropPath}`"
           :srcset="
             [

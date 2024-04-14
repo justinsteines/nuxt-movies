@@ -1,41 +1,51 @@
 <script setup lang="ts">
-import type { MovieListItem, ShowListItem } from '~/types/tmdb'
+const { data: resMovies, isFetching: isFetchingMovies } =
+  useMoviesTrendingInfiniteQuery()
+const { data: resShows, isFetching: isFetchingShows } =
+  useShowsTrendingInfiniteQuery()
 
-const { data: resMovies, suspense: suspenseMovies } = useMoviesTrendingQuery()
-const { data: resShows, suspense: suspenseShows } = useShowsTrendingQuery()
-await suspenseMovies()
-await suspenseShows()
+const isFetching = computed(
+  () => isFetchingMovies.value || isFetchingShows.value
+)
 
-// Use "useAsyncData" so that we get hydration and a new feature on every page visit.
-const { data: feature } = useAsyncData<
-  MovieListItem | ShowListItem | undefined
->(() => {
-  return new Promise((resolve) => {
-    const featureIndex = Math.floor(Math.random() * 10)
+// Use async data so that we get hydration and a new feature on every page visit.
+const { data: featureIndex } = useLazyAsyncData<number>(() => {
+  return new Promise((resolve) => resolve(Math.floor(Math.random() * 15)))
+})
+const { data: randomBit } = useLazyAsyncData<number>(() => {
+  return new Promise((resolve) => resolve(Math.floor(Math.random() * 2)))
+})
 
-    let feature
+const feature = computed(() => {
+  if (featureIndex.value === null || randomBit.value === null) {
+    return null
+  }
 
-    if (Math.floor(Math.random() * 2) === 0) {
-      feature = resMovies.value?.pages.flatMap((p) => p.results)[featureIndex]
-      if (!feature) {
-        resolve(undefined)
-        return
-      }
-    } else {
-      feature = resShows.value?.pages.flatMap((p) => p.results)[featureIndex]
-      if (!feature) {
-        resolve(undefined)
-        return
-      }
+  let feature
+
+  if (randomBit.value === 0) {
+    feature = resMovies.value?.pages.flatMap((p) => p.results)[
+      featureIndex.value
+    ]
+    if (!feature) {
+      return null
     }
+  } else {
+    feature = resShows.value?.pages.flatMap((p) => p.results)[
+      featureIndex.value
+    ]
+    if (!feature) {
+      return null
+    }
+  }
 
-    resolve(feature)
-  })
+  return feature
 })
 </script>
 
 <template>
-  <div>
+  <PageLoader v-if="isFetching" />
+  <div v-else>
     <Hero
       v-if="feature"
       :key="feature.backdrop_path"

@@ -1,13 +1,13 @@
 import { useInfiniteQuery } from '@tanstack/vue-query'
-import type { MovieListItem, TmdbPaginatedResponse } from '~/types/tmdb'
+import type { ShowListItem, TmdbPaginatedResponse } from '~/types/tmdb'
 
 export default function () {
   const { $tmdb } = useNuxtApp()
 
-  return useInfiniteQuery<TmdbPaginatedResponse<MovieListItem>>({
-    queryKey: ['movies', 'upcoming'],
+  const infiniteQuery = useInfiniteQuery<TmdbPaginatedResponse<ShowListItem>>({
+    queryKey: ['shows', 'airingToday'],
     queryFn: ({ pageParam, signal }) =>
-      $tmdb('/movie/upcoming', {
+      $tmdb('/tv/airing_today', {
         query: { page: pageParam },
         signal,
       }),
@@ -18,4 +18,10 @@ export default function () {
         : undefined
     },
   })
+
+  onServerPrefetch(async () => {
+    await infiniteQuery.suspense()
+  })
+
+  return infiniteQuery
 }

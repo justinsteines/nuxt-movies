@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import type { ShowListItem } from '~/types/tmdb'
+const { data: resTrending, isFetching: isFetchingTrending } =
+  useShowsTrendingInfiniteQuery()
+const { data: resAiringToday, isFetching: isFetchingAiringToday } =
+  useShowsAiringTodayInfiniteQuery()
+const { data: resAiringWeek, isFetching: isFetchingAiringWeek } =
+  useShowsAiringWeekInfiniteQuery()
+const { data: resPopular, isFetching: isFetchingPopular } =
+  useShowsPopularInfiniteQuery()
+const { data: resTopRated, isFetching: isFetchingTopRated } =
+  useShowsTopRatedInfiniteQuery()
 
-const { data: resTrending, suspense: suspenseTrending } =
-  useShowsTrendingQuery()
-const { data: resAiringToday, suspense: suspenseAiringToday } =
-  useShowsAiringTodayQuery()
-const { data: resAiringWeek, suspense: suspenseAiringWeek } =
-  useShowsAiringWeekQuery()
-const { data: resPopular, suspense: suspensePopular } = useShowsPopularQuery()
-const { data: resTopRated, suspense: suspenseTopRated } =
-  useShowsTopRatedQuery()
-
-await suspenseTrending()
-await suspenseAiringToday()
-await suspenseAiringWeek()
-await suspensePopular()
-await suspenseTopRated()
+const isFetching = computed(
+  () =>
+    isFetchingTrending.value ||
+    isFetchingAiringToday.value ||
+    isFetchingAiringWeek.value ||
+    isFetchingPopular.value ||
+    isFetchingTopRated.value
+)
 
 const carousels = computed(() => [
   {
@@ -40,16 +42,22 @@ const carousels = computed(() => [
   },
 ])
 
-// Use "useAsyncData" so that we get hydration and a new feature on every page visit.
-const { data: feature } = useAsyncData<ShowListItem | undefined>(() => {
-  return new Promise((resolve) =>
-    resolve(carousels?.value[0]?.items?.[Math.floor(Math.random() * 10)])
-  )
+// Use async data so that we get hydration and a new feature on every page visit.
+const { data: featureIndex } = useLazyAsyncData<number>(() => {
+  return new Promise((resolve) => resolve(Math.floor(Math.random() * 15)))
+})
+
+const feature = computed(() => {
+  if (featureIndex.value === null) {
+    return null
+  }
+  return carousels?.value?.[0]?.items?.[featureIndex.value]
 })
 </script>
 
 <template>
-  <div>
+  <PageLoader v-if="isFetching" />
+  <div v-else>
     <Hero
       v-if="feature"
       :key="feature.backdrop_path"

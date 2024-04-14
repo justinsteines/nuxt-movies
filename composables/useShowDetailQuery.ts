@@ -5,7 +5,7 @@ export default function () {
   const { $tmdb } = useNuxtApp()
   const route = useRoute()
 
-  return useQuery<ShowDetail>({
+  const query = useQuery<ShowDetail>({
     queryKey: ['shows', route.params.id],
     queryFn: ({ queryKey, signal }) =>
       $tmdb(`tv/${queryKey[1]}`, {
@@ -15,4 +15,10 @@ export default function () {
     staleTime: 1000 * 60 * 60 * 24,
     gcTime: 1000 * 60 * 60 * 24,
   })
+
+  onServerPrefetch(async () => {
+    await query.suspense()
+  })
+
+  return query
 }
