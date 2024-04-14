@@ -1,8 +1,28 @@
+<script setup lang="ts">
+const showLoader = ref(false)
+
+let timeout: any = null
+
+onMounted(async () => {
+  // Prevent loader from flashing.
+  timeout = setTimeout(() => {
+    showLoader.value = true
+  }, 350)
+})
+
+onUnmounted(() => {
+  if (!timeout) {
+    return
+  }
+  clearTimeout(timeout)
+})
+</script>
+
 <template>
   <div
     class="fixed left-1/2 top-[calc(50%-2.5rem)] -translate-x-1/2 -translate-y-1/2 lg:left-[calc(50%+3rem)] lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2"
   >
-    <div class="loader" />
+    <div v-if="showLoader" class="loader" />
   </div>
 </template>
 
