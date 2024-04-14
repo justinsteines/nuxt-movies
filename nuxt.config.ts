@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' }
+    pageTransition: { name: 'page', mode: 'out-in' },
   },
   modules: [
     '@nuxt/devtools',
@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     'nuxt-headlessui',
     'nuxt-icon',
     'nuxt-lodash',
-    'nuxt-security'
+    'nuxt-security',
   ],
   eslint: {
     config: {
@@ -20,15 +20,19 @@ export default defineNuxtConfig({
     tmdbApiKey: '',
   },
   lodash: {
-    prefix: "_",
+    prefix: '_',
     upperAfterPrefix: false,
   },
   security: {
     headers: {
-      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+      crossOriginEmbedderPolicy:
+        process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
       contentSecurityPolicy: {
-        'img-src': ['https://image.tmdb.org']
+        'img-src': ['https://image.tmdb.org'],
       },
+    },
+    corsHandler: {
+      origin: process.env.NUXT_TMDB_PROXY_CORS_ORIGIN,
     },
   },
 })
