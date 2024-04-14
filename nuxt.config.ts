@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     'nuxt-headlessui',
     'nuxt-icon',
     'nuxt-lodash',
+    'nuxt-security'
   ],
   eslint: {
     config: {
@@ -21,5 +22,13 @@ export default defineNuxtConfig({
   lodash: {
     prefix: "_",
     upperAfterPrefix: false,
+  },
+  security: {
+    headers: {
+      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+      contentSecurityPolicy: {
+        'img-src': ['https://image.tmdb.org']
+      },
+    },
   },
 })
