@@ -12,26 +12,28 @@ const { src, srcset } = defineProps<{
 const loaded = ref(false)
 
 const imageRef = ref<HTMLImageElement | null>(null)
+let imageRefValue: HTMLImageElement | null = null
 let observer: IntersectionObserver | null = null
 
 onMounted(() => {
   observer = new IntersectionObserver((entries) => {
     const [entry] = entries
     if (entry.isIntersecting) {
-      imageRef.value!.src = src
-      imageRef.value!.srcset = srcset
-      observer!.unobserve(imageRef.value!)
+      imageRefValue!.src = src
+      imageRefValue!.srcset = srcset
+      observer!.unobserve(imageRefValue!)
     }
   })
 
   if (imageRef.value) {
     observer.observe(imageRef.value)
+    imageRefValue = imageRef.value
   }
 })
 
 onUnmounted(() => {
-  if (imageRef.value && observer) {
-    observer.unobserve(imageRef.value)
+  if (imageRefValue && observer) {
+    observer.unobserve(imageRefValue)
   }
 })
 </script>
@@ -46,6 +48,7 @@ onUnmounted(() => {
         'scale-100 opacity-100': loaded,
         'scale-95 opacity-0': !loaded,
       }"
+      crossorigin="anonymous"
       @load="() => (loaded = true)"
     />
   </div>

@@ -31,6 +31,7 @@ defineProps<{
           :alt="title"
           sizes="(max-width: 1023px) 100vw, 66vw"
           class="w-full object-cover"
+          crossorigin="anonymous"
         />
       </div>
     </div>
