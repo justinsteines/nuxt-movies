@@ -32,7 +32,9 @@ export default defineNuxtConfig({
       },
     },
     corsHandler: {
-      origin: process.env.NUXT_TMDB_PROXY_CORS_ORIGIN,
+      origin: (
+        import.meta.env.NUXT_TMDB_PROXY_CORS_ORIGIN as string | undefined
+      )?.split(','),
     },
   },
 })
