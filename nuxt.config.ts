@@ -28,7 +28,7 @@ export default defineNuxtConfig({
       crossOriginEmbedderPolicy:
         process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
       contentSecurityPolicy: {
-        'img-src': ['https://image.tmdb.org'],
+        'img-src': ["'self'", 'data:', 'https://image.tmdb.org/'],
       },
     },
     corsHandler: {
