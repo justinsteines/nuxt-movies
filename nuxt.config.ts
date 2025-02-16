@@ -2,6 +2,7 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
   },
+
   modules: [
     '@nuxt/devtools',
     '@nuxt/eslint',
@@ -11,18 +12,22 @@ export default defineNuxtConfig({
     'nuxt-lodash',
     'nuxt-security',
   ],
+
   eslint: {
     config: {
       standalone: false,
     },
   },
+
   runtimeConfig: {
     tmdbApiKey: '',
   },
+
   lodash: {
     prefix: '_',
     upperAfterPrefix: false,
   },
+
   security: {
     headers: {
       crossOriginEmbedderPolicy:
@@ -37,4 +42,6 @@ export default defineNuxtConfig({
       )?.split(','),
     },
   },
+
+  compatibilityDate: '2025-02-16',
 })

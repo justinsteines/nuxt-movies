@@ -35,7 +35,11 @@ function onTabChange(index: number) {
       :rating-count="movie.vote_count"
       :backdrop-path="movie.backdrop_path"
     />
-    <HeadlessTabGroup :selected-index="selectedTab" @change="onTabChange">
+    <HeadlessTabGroup
+      as="div"
+      :selected-index="selectedTab"
+      @change="onTabChange"
+    >
       <AppContainer class="mt-14">
         <TabList>
           <Tab v-for="tab of TABS" :key="tab">
