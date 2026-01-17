@@ -35,5 +35,13 @@
     "prettier": "^3.8.0",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss-safe-area": "^0.8.0"
+  },
+  "overrides": {
+    "@nuxt/devtools": {
+      "diff": "8.0.3"
+    },
+    "nuxt": {
+      "diff": "8.0.3"
+    }
   }
 }
