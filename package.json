@@ -37,12 +37,16 @@
     "tailwindcss-safe-area": "^0.8.0"
   },
   "overrides": {
+    "@antfu/eslint-config": {
+      "lodash": "4.17.23"
+    },
     "@nuxt/devtools": {
       "diff": "8.0.3"
     },
     "nuxt": {
       "diff": "8.0.3",
-      "tar": "7.5.4"
+      "tar": "7.5.4",
+      "lodash": "4.17.23"
     },
     "nuxt-lodash": {
       "lodash-es": "4.17.23"
